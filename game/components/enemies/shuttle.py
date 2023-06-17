@@ -6,7 +6,7 @@ class Shuttle(Enemy):
     WIDHT=50
     HEIGHT=50
     SPEED_Y=6
-    SPEED_X=15
+    SPEED_X=16
 
     def __init__(self):
         self.image=pygame.transform.scale(ENEMY_2, (self.WIDHT,self.HEIGHT))

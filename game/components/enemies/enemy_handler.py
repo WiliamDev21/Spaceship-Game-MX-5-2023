@@ -1,6 +1,7 @@
 from  game.components.enemies.ship import Ship
 from  game.components.enemies.shuttle import Shuttle
 from  game.components.enemies.kamikaze import Kamikaze
+from  game.components.enemies.tracker import Tracker
 
 class EnemyHandler():
 
@@ -8,10 +9,10 @@ class EnemyHandler():
         self.enemies=[]
         self.cont=1
 
-    def update(self):
+    def update(self,enemy_pos):
         self.add_enemy()
         for enemy in self.enemies:
-            enemy.update()
+            enemy.update(enemy_pos)
             if not enemy.is_alive:
                 self.remove_enemy(enemy)
 
@@ -26,6 +27,8 @@ class EnemyHandler():
             self.enemies.append(Ship())
         if self.cont % 100 == 0:
             self.enemies.append(Kamikaze())
+        if self.cont % 500 == 0:
+            self.enemies.append(Tracker())
         self.cont += 1
 
     def remove_enemy(self,enemy):

@@ -36,7 +36,7 @@ class Game:
     def update(self):
         user_input=pygame.key.get_pressed()
         self.player.update(user_input)
-        self.enemy_handler.update()
+        self.enemy_handler.update(self.player.rect)
 
     def draw(self):
         self.clock.tick(FPS)
