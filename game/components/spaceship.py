@@ -13,6 +13,8 @@ class Spaceship:
         self.rect=self.image.get_rect()
         self.rect.x=self.X_POS
         self.rect.y=self.Y_POS
+        self.life = 50
+        self.is_alive = True
 
     def update(self, user_input):
         if user_input[pygame.K_LEFT] or user_input[pygame.K_a]:
@@ -42,3 +44,8 @@ class Spaceship:
     def move_up(self):
         if self.rect.top>SCREEN_HEIGHT/2:
             self.rect.y-=10
+
+    def get_damage(self,damage):
+        self.life -= damage
+        if self.life <= 0:
+            self.is_alive = False

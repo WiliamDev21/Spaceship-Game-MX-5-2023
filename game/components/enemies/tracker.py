@@ -17,10 +17,10 @@ class Tracker(Enemy):
         self.is_alive = True
         self.start = True
 
-    def update(self,enemy_pos):
-        self.move(enemy_pos)
+    def update(self,player_pos):
+        self.move(player_pos)
 
-    def move(self,enemy_pos):
+    def move(self,player_pos):
         if self.start:
             if self.rect.x < SCREEN_WIDTH // 2:
                 self.rect.x += self.speed_x
@@ -30,7 +30,7 @@ class Tracker(Enemy):
                 self.start = False
                 self.speed_x = 10
         else:
-            if enemy_pos.x > self.rect.x:
+            if player_pos.x > self.rect.x:
                 self.rect.x += self.speed_x
-            elif enemy_pos.x < self.rect.x:
+            elif player_pos.x < self.rect.x:
                 self.rect.x -= self.speed_x

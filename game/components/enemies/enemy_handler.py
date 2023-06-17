@@ -9,10 +9,11 @@ class EnemyHandler():
         self.enemies=[]
         self.cont=1
 
-    def update(self,enemy_pos):
+    def update(self,player):
         self.add_enemy()
         for enemy in self.enemies:
-            enemy.update(enemy_pos)
+            enemy.update(player.rect)
+            self.check_colisions(enemy,player)
             if not enemy.is_alive:
                 self.remove_enemy(enemy)
 
@@ -33,3 +34,8 @@ class EnemyHandler():
 
     def remove_enemy(self,enemy):
         self.enemies.remove(enemy)
+
+    def check_colisions(self,enemy,player):
+        if enemy.rect.colliderect(player.rect):
+            enemy.is_alive = False
+            player.get_damage(10)

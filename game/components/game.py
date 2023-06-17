@@ -36,7 +36,10 @@ class Game:
     def update(self):
         user_input=pygame.key.get_pressed()
         self.player.update(user_input)
-        self.enemy_handler.update(self.player.rect)
+        self.enemy_handler.update(self.player)
+        if not self.player.is_alive:
+                pygame.time.delay(300)
+                self.playing = False
 
     def draw(self):
         self.clock.tick(FPS)

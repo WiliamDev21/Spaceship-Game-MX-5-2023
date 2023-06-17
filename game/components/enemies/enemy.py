@@ -13,7 +13,7 @@ class Enemy:
         self.mov_x = random.choice(self.MOV_X)
         self.is_alive=True
     
-    def update(self,enemy_pos):
+    def update(self,player_pos):
         if self.rect.y >= SCREEN_HEIGHT:
             self.is_alive=False
         self.move()
