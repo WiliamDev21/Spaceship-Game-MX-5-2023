@@ -1,26 +1,30 @@
 import pygame
 import random
 from game.components.enemies.enemy import Enemy
-from game.utils.constants import ENEMY_4,RIGHT,LEFT,SCREEN_WIDTH,SCREEN_HEIGHT
+from game.utils.constants import ENEMY_4, SCREEN_WIDTH, SCREEN_HEIGHT
+
 
 class Tracker(Enemy):
-    WIDHT=50
-    HEIGHT=50
-    POS_X=[-WIDHT,SCREEN_WIDTH+WIDHT]
+    WIDHT = 50
+    HEIGHT = 50
+    POS_X = [-WIDHT, SCREEN_WIDTH+WIDHT]
 
     def __init__(self):
-        self.image=pygame.transform.scale(ENEMY_4, (self.WIDHT,self.HEIGHT))
-        self.rect=self.image.get_rect()
-        self.rect.x = self.POS_X[random.randrange(0,1)]
-        self.rect.y = random.randint(0,SCREEN_HEIGHT/2 - self.HEIGHT)
+        self.image = pygame.transform.scale(ENEMY_4, (self.WIDHT, self.HEIGHT))
+        self.rect = self.image.get_rect()
+        self.rect.x = self.POS_X[random.randrange(0, 1)]
+        self.rect.y = random.randint(0, SCREEN_HEIGHT // 2 - self.HEIGHT)
         self.speed_x = 20
         self.is_alive = True
+        self.shooting_time = 0
         self.start = True
 
-    def update(self,player_pos):
+    def update(self, player_pos,bullet_handler):
         self.move(player_pos)
+        self.shoot(bullet_handler)
+        self.shooting_time += 1
 
-    def move(self,player_pos):
+    def move(self, player_pos):
         if self.start:
             if self.rect.x < SCREEN_WIDTH // 2:
                 self.rect.x += self.speed_x
