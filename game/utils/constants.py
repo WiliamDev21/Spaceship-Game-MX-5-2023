@@ -24,12 +24,14 @@ SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 SPACESHIP_SHIELD = pygame.image.load(
     os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))
 BULLET = pygame.image.load(os.path.join(IMG_DIR, "Bullet/bullet_1.png"))
+LASER = pygame.image.load(os.path.join(IMG_DIR, "Bullet/laser.png"))
 
 BULLET_ENEMY = pygame.image.load(os.path.join(IMG_DIR, "Bullet/bullet_2.png"))
 ENEMY_1 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_1.png"))
 ENEMY_2 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2.png"))
 ENEMY_3 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_3.png"))
 ENEMY_4 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_4.png"))
+ENEMY_5 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_5.png"))
 FONT_STYLE = 'freesansbold.ttf'
 
 RIGHT = 'right'
@@ -37,3 +39,5 @@ LEFT = 'left'
 
 BULLET_ENEMY_TYPE = "enemy"
 BULLET_PLAYER_TYPE = "player"
+
+LASER_TYPE = "laser"

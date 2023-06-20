@@ -59,4 +59,4 @@ class Spaceship:
             self.is_alive = False
 
     def shoot(self, bullet_handler):
-        bullet_handler.add_bullet(BULLET_PLAYER_TYPE, self.rect.center)
+        bullet_handler.add_bullet(BULLET_PLAYER_TYPE, self)

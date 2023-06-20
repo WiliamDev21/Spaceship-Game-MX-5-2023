@@ -7,11 +7,11 @@ class BulletPlayer(Bullet):
     HEIGHT = 20
     SPEED = 10
 
-    def __init__(self, center):
+    def __init__(self, ship):
         self.image = BULLET
         self.image = pygame.transform.scale(self.image, (self.WIDTH, self.HEIGHT))
         self.type = BULLET_PLAYER_TYPE
-        super().__init__(self.image, self.type, center)
+        super().__init__(self.image, self.type, ship)
 
     def update(self, enemy):
         self.rect.y -= self.SPEED

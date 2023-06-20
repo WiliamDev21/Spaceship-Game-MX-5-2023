@@ -1,3 +1,4 @@
+from game.components.enemies.oneshot import Oneshot
 from game.components.enemies.ship import Ship
 from game.components.enemies.shuttle import Shuttle
 from game.components.enemies.kamikaze import Kamikaze
@@ -32,7 +33,9 @@ class EnemyHandler():
             self.enemies.append(Kamikaze(self.extra_speed))
         if self.cont % 500 == 0:
             self.enemies.append(Tracker())
-        if self.cont % 700 == 0:
+        if self.cont % 300 == 0: #and self.cont > 1000:
+            self.enemies.append(Oneshot())
+        if self.cont % 1000 == 0:
             self.extra_speed += self.cont / 700
             for enemy in self.enemies:
                 enemy.extra_speed = self.extra_speed
