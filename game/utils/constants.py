@@ -32,7 +32,10 @@ ENEMY_2 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2.png"))
 ENEMY_3 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_3.png"))
 ENEMY_4 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_4.png"))
 ENEMY_5 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_5.png"))
+
 FONT_STYLE = 'freesansbold.ttf'
+BLACK_COLOR = (0, 0, 0)
+WHITE_COLOR = (255, 255, 255)
 
 RIGHT = 'right'
 LEFT = 'left'
@@ -41,3 +44,5 @@ BULLET_ENEMY_TYPE = "enemy"
 BULLET_PLAYER_TYPE = "player"
 
 LASER_TYPE = "laser"
+
+HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/heart.png'))

@@ -23,6 +23,7 @@ class Oneshot(Enemy):
         self.timeShooted = 0
         self.timeWaited = 0
         self.is_alive = True
+        self.is_destroyed = False
 
 
     def update(self, player_pos,bullet_handler):

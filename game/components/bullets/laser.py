@@ -23,6 +23,7 @@ class Laser(Bullet):
     def update(self, object):
         if self.rect.colliderect(object.rect):
             object.is_alive = False
+            object.life = 0
         if self.timer == self.life_time or not self.oneshot.is_alive:
             self.is_alive = False
         self.timer += 1

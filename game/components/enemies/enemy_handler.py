@@ -11,6 +11,7 @@ class EnemyHandler():
         self.enemies = []
         self.extra_speed = 0
         self.cont = 1
+        self.number_enemy_destroyed = 0
 
     def update(self, player,bullet_handler):
         self.add_enemy()
@@ -18,6 +19,8 @@ class EnemyHandler():
             self.check_colisions(enemy, player)
             enemy.update(player.rect,bullet_handler)
             if not enemy.is_alive:
+                if enemy.is_destroyed:
+                    self.number_enemy_destroyed += 1
                 self.remove_enemy(enemy)
 
     def draw(self, screen):
@@ -35,7 +38,7 @@ class EnemyHandler():
             self.enemies.append(Tracker())
         if self.cont % 300 == 0: #and self.cont > 1000:
             self.enemies.append(Oneshot())
-        if self.cont % 1000 == 0:
+        if self.cont % 400 == 0:
             self.extra_speed += self.cont / 700
             for enemy in self.enemies:
                 enemy.extra_speed = self.extra_speed
@@ -48,3 +51,9 @@ class EnemyHandler():
         if enemy.rect.colliderect(player.rect):
             enemy.is_alive = False
             player.get_damage(10)
+
+    def reset(self):
+        self.enemies = []
+        self.number_enemy_destroyed = 0
+        self.extra_speed = 0
+        self.cont = 1

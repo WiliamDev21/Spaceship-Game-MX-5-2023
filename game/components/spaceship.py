@@ -30,9 +30,11 @@ class Spaceship:
         if user_input[pygame.K_UP] or user_input[pygame.K_w]:
             self.move_up()
         elif user_input[pygame.K_SPACE]:
-            if self.fire_cont % self.FIRE_RATE==0:
+            if self.fire_cont == self.FIRE_RATE:
                 self.shoot(bullet_handler)
-        self.fire_cont+=1
+                self.fire_cont=0
+        if self.fire_cont < self.FIRE_RATE:
+            self.fire_cont += 1
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -60,3 +62,10 @@ class Spaceship:
 
     def shoot(self, bullet_handler):
         bullet_handler.add_bullet(BULLET_PLAYER_TYPE, self)
+
+    def reset(self):
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS
+        self.is_alive = True
+        self.life = 50
+        self.fire_cont=0

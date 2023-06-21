@@ -18,6 +18,7 @@ class Tracker(Enemy):
         self.is_alive = True
         self.shooting_time = 0
         self.start = True
+        self.is_destroyed = False
 
     def update(self, player_pos,bullet_handler):
         self.move(player_pos)

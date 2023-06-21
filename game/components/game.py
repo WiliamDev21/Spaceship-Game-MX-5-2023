@@ -1,6 +1,8 @@
 import pygame
+from game.utils import text_utils
+from game.utils import life_utils
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, WHITE_COLOR
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
@@ -19,37 +21,57 @@ class Game:
         self.y_pos_bg = 0
         self.player = Spaceship()
         self.enemy_handler = EnemyHandler()
-        self.bullet_handler= BulletHandler()
+        self.bullet_handler = BulletHandler()
+        self.scores = [0]
+        self.number_death = 0
 
     def run(self):
         # Game loop: events - update - draw
-        self.playing = True
-        while self.player.is_alive:
+        self.running = True
+        while self.running:
             self.events()
             self.update()
             self.draw()
         pygame.time.delay(300)
         pygame.display.quit()
+        pygame.quit()
         # pygame.quit()
 
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self.running = False
                 self.playing = False
+            elif pygame.key.get_pressed()[pygame.K_r] and not self.playing:
+                self.playing = True
+                self.reset()
 
     def update(self):
-        user_input = pygame.key.get_pressed()
-        self.player.update(user_input,self.bullet_handler)
-        self.enemy_handler.update(self.player,self.bullet_handler)
-        self.bullet_handler.update(self.player, self.enemy_handler.enemies)
+        if self.playing:
+            user_input = pygame.key.get_pressed()
+            self.player.update(user_input, self.bullet_handler)
+            self.enemy_handler.update(self.player, self.bullet_handler)
+            self.bullet_handler.update(self.player, self.enemy_handler.enemies)
+            self.scores[self.number_death] = self.enemy_handler.number_enemy_destroyed * 10
+            if not self.player.is_alive:
+                self.draw()
+                pygame.time.delay(300)
+                self.playing = False
+                self.number_death += 1
+                self.scores.append(0)
 
     def draw(self):
-        self.clock.tick(FPS)
-        self.screen.fill((255, 255, 255))
-        self.draw_background()
-        self.player.draw(self.screen)
-        self.enemy_handler.draw(self.screen)
-        self.bullet_handler.draw(self.screen)
+        if self.playing:
+            self.clock.tick(FPS)
+            self.screen.fill((255, 255, 255))
+            self.draw_background()
+            self.player.draw(self.screen)
+            self.enemy_handler.draw(self.screen)
+            self.bullet_handler.draw(self.screen)
+            self.draw_score()
+            life_utils.draw_life(self.player.life,self.screen)
+        else:
+            self.draw_menu()
         pygame.display.update()
         pygame.display.flip()
 
@@ -63,3 +85,33 @@ class Game:
                 image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
+
+    def draw_menu(self):
+        if self.number_death == 0:
+            text, text_rect = text_utils.get_message(
+                'Press any R to Start', 30, WHITE_COLOR)
+            self.screen.blit(text, text_rect)
+        else:
+            best, best_score = text_utils.get_message(
+                f'Best Score: {max(self.scores)}', 30, WHITE_COLOR,height=SCREEN_HEIGHT//2 - 50)
+            text, text_rect = text_utils.get_message(
+                'Press any R to Restart', 30, WHITE_COLOR)
+            score, score_rect = text_utils.get_message(
+                f'Your score is: {self.scores[self.number_death-1]}', 30, WHITE_COLOR, height=SCREEN_HEIGHT//2 + 50)
+            tries, tries_rect = text_utils.get_message(
+                f'Deads: {self.number_death}', 20, WHITE_COLOR, height=SCREEN_HEIGHT - 50)
+            self.screen.blit(text, text_rect)
+            self.screen.blit(score, score_rect)
+            self.screen.blit(best, best_score)
+            self.screen.blit(tries, tries_rect)
+
+    def draw_score(self):
+        score, score_rect = text_utils.get_message(
+            f'Score: {self.scores[self.number_death]}', 20, WHITE_COLOR, 1000, 40)
+        self.screen.blit(score, score_rect)
+
+    def reset(self):
+        self.player.reset()
+        self.enemy_handler.reset()
+        self.bullet_handler.reset()
+        self.scores.append(0)

@@ -38,3 +38,4 @@ class Enemy:
 
     def get_damage(self, damage):
         self.is_alive = False
+        self.is_destroyed = True
