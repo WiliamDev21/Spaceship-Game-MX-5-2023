@@ -1,4 +1,5 @@
 import pygame
+from game.components.powerups.powerup_handler import PowerUpHandler
 from game.utils import text_utils
 from game.utils import life_utils
 
@@ -22,6 +23,7 @@ class Game:
         self.player = Spaceship()
         self.enemy_handler = EnemyHandler()
         self.bullet_handler = BulletHandler()
+        self.powerup_handler = PowerUpHandler()
         self.scores = [0]
         self.number_death = 0
 
@@ -52,13 +54,14 @@ class Game:
             self.player.update(user_input, self.bullet_handler)
             self.enemy_handler.update(self.player, self.bullet_handler)
             self.bullet_handler.update(self.player, self.enemy_handler.enemies)
+            self.powerup_handler.update(
+                self.player, self.enemy_handler.number_enemy_destroyed)
             self.scores[self.number_death] = self.enemy_handler.number_enemy_destroyed * 10
             if not self.player.is_alive:
                 self.draw()
                 pygame.time.delay(300)
                 self.playing = False
                 self.number_death += 1
-                self.scores.append(0)
 
     def draw(self):
         if self.playing:
@@ -68,8 +71,9 @@ class Game:
             self.player.draw(self.screen)
             self.enemy_handler.draw(self.screen)
             self.bullet_handler.draw(self.screen)
+            self.powerup_handler.draw(self.screen)
             self.draw_score()
-            life_utils.draw_life(self.player.life,self.screen)
+            life_utils.draw_life(self.player.life, self.screen)
         else:
             self.draw_menu()
         pygame.display.update()
@@ -93,7 +97,7 @@ class Game:
             self.screen.blit(text, text_rect)
         else:
             best, best_score = text_utils.get_message(
-                f'Best Score: {max(self.scores)}', 30, WHITE_COLOR,height=SCREEN_HEIGHT//2 - 50)
+                f'Best Score: {max(self.scores)}', 30, WHITE_COLOR, height=SCREEN_HEIGHT//2 - 50)
             text, text_rect = text_utils.get_message(
                 'Press any R to Restart', 30, WHITE_COLOR)
             score, score_rect = text_utils.get_message(
@@ -114,4 +118,5 @@ class Game:
         self.player.reset()
         self.enemy_handler.reset()
         self.bullet_handler.reset()
+        self.powerup_handler.reset()
         self.scores.append(0)

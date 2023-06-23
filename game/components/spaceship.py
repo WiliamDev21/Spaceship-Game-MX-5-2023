@@ -1,5 +1,7 @@
 import pygame
-from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT,BULLET_PLAYER_TYPE
+from game.components.powerups.life import Life
+from game.components.powerups.shield import Shield
+from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT,BULLET_PLAYER_TYPE, SPACESHIP_SHIELD
 
 
 class Spaceship:
@@ -7,18 +9,21 @@ class Spaceship:
     HEIGTH = 60
     X_POS = (SCREEN_WIDTH//2)-WIDHT
     Y_POS = 450
+    FIRE_RATE=7
 
     def __init__(self):
-        self.image = SPACESHIP
         self.image = pygame.transform.scale(
-            self.image, (self.WIDHT, self.HEIGTH))
+            SPACESHIP, (self.WIDHT, self.HEIGTH))
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.life = 50
         self.is_alive = True
-        self.FIRE_RATE=7
         self.fire_cont=0
+        self.is_inmune = False
+        self.inmune_cont = 0
+        self.inmune_time = 0
+
 
     def update(self, user_input,bullet_handler):
         if user_input[pygame.K_LEFT] or user_input[pygame.K_a]:
@@ -29,12 +34,20 @@ class Spaceship:
             self.move_down()
         if user_input[pygame.K_UP] or user_input[pygame.K_w]:
             self.move_up()
+
         elif user_input[pygame.K_SPACE]:
             if self.fire_cont == self.FIRE_RATE:
                 self.shoot(bullet_handler)
                 self.fire_cont=0
+
         if self.fire_cont < self.FIRE_RATE:
             self.fire_cont += 1
+
+        if self.is_inmune:
+            self.inmune_cont += 1
+            if self.inmune_cont == self.inmune_time:
+                self.reset_shield()
+                
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -56,12 +69,22 @@ class Spaceship:
             self.rect.y -= 10
 
     def get_damage(self, damage):
-        self.life -= damage
+        if not self.is_inmune:
+            self.life -= damage
         if self.life <= 0:
             self.is_alive = False
 
     def shoot(self, bullet_handler):
         bullet_handler.add_bullet(BULLET_PLAYER_TYPE, self)
+
+    def activate_powerup(self,powerup):
+        if type(powerup) == Shield:
+            self.is_inmune = True
+            self.inmune_time = 100
+            self.image = pygame.transform.scale(
+            SPACESHIP_SHIELD, (self.WIDHT, self.HEIGTH))
+        elif type(powerup) == Life:
+            self.life += 10
 
     def reset(self):
         self.rect.x = self.X_POS
@@ -69,3 +92,10 @@ class Spaceship:
         self.is_alive = True
         self.life = 50
         self.fire_cont=0
+        
+    def reset_shield(self):
+        self.image = pygame.transform.scale(
+            SPACESHIP, (self.WIDHT, self.HEIGTH))
+        self.is_inmune = False
+        self.inmune_cont = 0
+        self.inmune_time = 0
