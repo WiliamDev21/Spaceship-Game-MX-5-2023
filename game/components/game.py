@@ -1,9 +1,10 @@
+import os
 import pygame
 from game.components.powerups.powerup_handler import PowerUpHandler
 from game.utils import text_utils
 from game.utils import life_utils
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, WHITE_COLOR
+from game.utils.constants import BG, ICON, IMG_DIR, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, WHITE_COLOR
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.bullets.bullet_handler import BulletHandler
@@ -30,6 +31,7 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.running = True
+        self.load_music()
         while self.running:
             self.events()
             self.update()
@@ -120,3 +122,8 @@ class Game:
         self.bullet_handler.reset()
         self.powerup_handler.reset()
         self.scores.append(0)
+
+    def load_music(self):
+        pygame.mixer.music.load(os.path.join(IMG_DIR, 'Sounds/music.mp3'))
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.15)

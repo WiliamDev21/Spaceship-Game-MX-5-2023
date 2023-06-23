@@ -1,7 +1,8 @@
+import os
 import pygame
 from game.components.powerups.life import Life
 from game.components.powerups.shield import Shield
-from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT,BULLET_PLAYER_TYPE, SPACESHIP_SHIELD
+from game.utils.constants import IMG_DIR, SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT,BULLET_PLAYER_TYPE, SPACESHIP_SHIELD
 
 
 class Spaceship:
@@ -69,9 +70,14 @@ class Spaceship:
             self.rect.y -= 10
 
     def get_damage(self, damage):
+        self.hit_sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/hit_sound.mp3'))
+        self.hit_sound.play()
         if not self.is_inmune:
             self.life -= damage
         if self.life <= 0:
+            self.die_sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/die.mp3'))
+            self.die_sound.set_volume(1.5)
+            self.die_sound.play()
             self.is_alive = False
 
     def shoot(self, bullet_handler):
@@ -79,11 +85,15 @@ class Spaceship:
 
     def activate_powerup(self,powerup):
         if type(powerup) == Shield:
+            self.shield_sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/shield_sound.mp3'))
+            self.shield_sound.play()
             self.is_inmune = True
             self.inmune_time = 100
             self.image = pygame.transform.scale(
             SPACESHIP_SHIELD, (self.WIDHT, self.HEIGTH))
         elif type(powerup) == Life:
+            self.life_sound = pygame.mixer.Sound(os.path.join(IMG_DIR, 'Sounds/life_sound.mp3'))
+            self.life_sound.play()
             self.life += 10
 
     def reset(self):
