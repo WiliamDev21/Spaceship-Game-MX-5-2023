@@ -41,7 +41,7 @@ Dispara balas con cierta cadencia.
 
 #### **Apariencia**
 &nbsp;
-![](game\assets\Enemy\enemy_1.png "Ship")
+![](./game/assets/Enemy/enemy_1.png "Ship")
 
 ---
 ### *Shuttle*
@@ -56,7 +56,7 @@ Dispara balas con cierta cadencia.
 
 #### **Apariencia**
 &nbsp;
-![](game\assets\Enemy\enemy_2.png "Shuttle")
+![](./game/assets/Enemy/enemy_2.png "Shuttle")
 
 ---
 ### *Kamikaze*
@@ -71,7 +71,7 @@ El unico daño que podra hacer sera impactando con el jugador.
 
 #### **Apariencia**
 &nbsp;
-![](game\assets\Enemy\enemy_3.png "Kamikaze")
+![](./game/assets/Enemy/enemy_3.png "Kamikaze")
 
 ---
 ### *Traker*
@@ -86,7 +86,7 @@ Dispara balas con cierta cadencia.
 
 #### **Apariencia**
 &nbsp;
-![](game\assets\Enemy\enemy_4.png "Traker")
+![](./game/assets/Enemy/enemy_4.png "Traker")
 
 ---
 ### *OneShot*
@@ -99,11 +99,11 @@ Aparecera en la parte superior del lado izquierdo bajando hasta una altura aleat
 
 Dispara un laser en horizontal que atraviesa la pantalla durante un periodo de tiempo, si impacta al jugador le quitara toda la vida.
 
-![](game\assets\Bullet\laser.png "Laser")
+![](./game/assets/Bullet/laser.png "Laser")
 
 #### **Apariencia**
 &nbsp;
-![](game\assets\Enemy\enemy_5.png "OneShot")
+![](./game/assets/Enemy/enemy_5.png "OneShot")
 
 ---
 ## PowerUps
@@ -120,7 +120,7 @@ Aparece cada cierto periodo de tiempo, aparece en cualquier parte arriba y va ca
 
 Te brinda un escudo que te hace inbulnerable a cualquier ataque durante un periodo de tiempo.
 
-![](game\assets\Other\shield.png "Shield")
+![](./game/assets/Other/shield.png "Shield")
 
 ---
 
@@ -134,4 +134,4 @@ Aparece cada que eliminas quince enemigos, aparece en cualquier parte arriba y v
 
 Te brinda un punto más de vida el cual se sumara a tu vida actual.
 
-![](game\assets\Other\heart.png "Heart")
+![](./game/assets/Other/heart.png "Heart")
